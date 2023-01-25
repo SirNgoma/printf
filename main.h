@@ -1,54 +1,88 @@
-#ifndef _PRINTF
-#define _PRINTF
+#ifndef _MAIN
+#define _MAIN
+
+#include <unistd.h>
+
+#include <stdlib.h>
+
 #include <stdarg.h>
-
-int _printf(const char *format, ...);
-int _putchar(char);
-int p_p(char c, va_list *ap);
-
-int buffer(char a, char *s);
-int p_bin(unsigned int num);
-int exponent(int x, int y);
-int p_int(int);
-int p_string(char *);
-int p_hexstring(char *);
-int p_rev(char *s);
-int p_hexcap(unsigned int num);
-int p_octal(unsigned int num);
-int p_uint(unsigned int num);
-int p_hex(unsigned int num);
-int mkstring(va_list *);
-int mkchar(va_list *);
-int mkint(va_list *);
-int mkbin(va_list *);
-int mkhex(va_list *);
-int mkhexcap(va_list *);
-int mkoctal(va_list *);
-int mkhexstring(va_list *);
-int mkunsigned(va_list *);
 
 
 
 /**
- * struct flag -flag object
  *
- * @letter: flag char
+ * * struct convert - defines a structure for symbols and functions
  *
- * @prnt: print function pointer
+ * *
  *
- * Descriptions: contains flag letter and corresponding print function
- **/
+ * * @sym: The operator
+ *
+ * * @f: The function associated
+ *
+ * */
 
-typedef struct flag
+struct convert
+
 {
 
-	char letter;
+		char *sym;
 
-	int (*prnt)(va_list *);
+			int (*f)(va_list);
 
-} find_flag;
+};
 
-#endif
+typedef struct convert conver_t;
+
+
+
+/*Main functions*/
+
+int parser(const char *format, conver_t f_list[], va_list arg_list);
+
+int _printf(const char *format, ...);
+
+int _write_char(char);
+
+int print_char(va_list);
+
+int print_string(va_list);
+
+int print_percent(va_list);
+
+int print_integer(va_list);
+
+int print_number(va_list);
+
+int print_binary(va_list);
+
+int print_reversed(va_list arg);
+
+int rot13(va_list);
+
+int unsigned_integer(va_list);
+
+int print_octal(va_list list);
+
+int print_hex(va_list list);
+
+int print_heX(va_list list);
+
+
+
+/*Helper functions*/
+
+unsigned int base_len(unsigned int, int);
+
+char *rev_string(char *);
+
+void write_base(char *str);
+
+char *_memcpy(char *dest, char *src, unsigned int n);
+
+int print_unsgined_number(unsigned int);
+
+
+
 
 
 #endif

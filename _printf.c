@@ -26,7 +26,7 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			result += pull_print(format[i + 1], &ap);
+			result += p_p(format[i + 1], &ap);
 			i++;
 		}
 		else

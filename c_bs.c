@@ -3,243 +3,188 @@
 
 int hex_check(int, char);
 
-
-
 /**
- *
- *  * print_binary - Converts a number from base 10 to binary
- *
- *   * @list: List of arguments passed to this function
- *
- *    * Return: The length of the number printed
- *
- *     */
+ * print_binary - Converts a number from base 10 to binary
+ * @list: List of arguments passed to this function
+ * Return: The length of the number printed
+ **/
 
 int print_binary(va_list list)
-
 {
 
-		unsigned int num;
+	unsigned int num;
 
-			int i, len;
+	int i, len;
 
-				char *str;
+	char *str;
 
-					char *rev_str;
+	char *rev_str;
 
+	num = va_arg(list, unsigned int);
 
+	if (num == 0)
+	{
+		return (_write_char('0'));
+		if (num < 1)
+		{
+			return (-1);
+		}
+	}
 
-						num = va_arg(list, unsigned int);
+	len = base_len(num, 2);
 
-							if (num == 0)
+	str = malloc(sizeof(char) * len + 1);
 
-										return (_write_char('0'));
+	if (str == NULL)
+	{
+		return (-1);
+	}
 
-								if (num < 1)
+	for (i = 0; num > 0; i++)
+	{
+		if (num % 2 == 0)
+		{
+			str[i] = '0';
+		}
+		else
+		{
+			str[i] = '1';
+		}
+		num = num / 2;
+	}
 
-											return (-1);
+	str[i] = '\0';
 
-									len = base_len(num, 2);
+	rev_str = rev_string(str);
 
-										str = malloc(sizeof(char) * len + 1);
+	if (rev_str == NULL)
+	{
+		return (-1);
+	}
 
-											if (str == NULL)
+	write_base(rev_str);
 
-														return (-1);
+	free(str);
 
+	free(rev_str);
 
-
-												for (i = 0; num > 0; i++)
-
-														{
-
-																	if (num % 2 == 0)
-
-																					str[i] = '0';
-
-																			else
-
-																							str[i] = '1';
-
-																					num = num / 2;
-
-																						}
-
-													str[i] = '\0';
-
-														rev_str = rev_string(str);
-
-															if (rev_str == NULL)
-
-																		return (-1);
-
-																write_base(rev_str);
-
-																	free(str);
-
-																		free(rev_str);
-
-																			return (len);
-
+	return (len);
 }
 
 
 
 /**
- *
- *  * print_octal - Prints the numeric representation of a number in octal base
- *
- *   * @list: List of all the arguments passed to the program
- *
- *    * Return: Number of symbols printed to stdout
- *
- *     */
+ * print_octal - Prints the numeric representation of a number in octal base
+ * @list: List of all the arguments passed to the program
+ * Return: Number of symbols printed to stdout
+ **/
 
 int print_octal(va_list list)
-
 {
+	unsigned int num;
 
-		unsigned int num;
+	int len;
 
-			int len;
+	char *octal_rep;
 
-				char *octal_rep;
+	char *rev_str;
 
-					char *rev_str;
+	num = va_arg(list, unsigned int);
 
+	if (num == 0)
+	{
+		return (_write_char('0'));
+	}
+	if (num < 1)
+	{
+		return (-1);
+	}
 
+	len = base_len(num, 8);
 
-						num = va_arg(list, unsigned int);
+	octal_rep = malloc(sizeof(char) * len + 1);
 
+	if (octal_rep == NULL)
+	{
+		return (-1);
+	}
 
+	for (len = 0; num > 0; len++)
+	{
+		octal_rep[len] = (num % 8) + 48;
+		num = num / 8;
+	}
 
-							if (num == 0)
+	octal_rep[len] = '\0';
 
-										return (_write_char('0'));
+	rev_str = rev_string(octal_rep);
 
-								if (num < 1)
+	if (rev_str == NULL)
+	{
+		return (-1);
+	}
 
-											return (-1);
+	write_base(rev_str);
 
-									len = base_len(num, 8);
+	free(octal_rep);
 
-
-
-										octal_rep = malloc(sizeof(char) * len + 1);
-
-											if (octal_rep == NULL)
-
-														return (-1);
-
-												for (len = 0; num > 0; len++)
-
-														{
-
-																	octal_rep[len] = (num % 8) + 48;
-
-																			num = num / 8;
-
-
-
-																				}
-
-													octal_rep[len] = '\0';
-
-														rev_str = rev_string(octal_rep);
-
-															if (rev_str == NULL)
-
-																		return (-1);
-
-
-
-																write_base(rev_str);
-
-																	free(octal_rep);
-
-																		free(rev_str);
-
-																			return (len);
-
+	free(rev_str);
+	return (len);
 }
 
 
 
 /**
- *
- *  * print_hex - Prints a representation of a decimal number on base16 lowercase
- *
- *   * @list: List of the arguments passed to the function
- *
- *    * Return: Number of characters printed
- *
- *     */
+ * print_hex - Prints a representation of a decimal number on base16 lowercase
+ * @list: List of the arguments passed to the function
+ * Return: Number of characters printed
+ **/
 
 int print_hex(va_list list)
-
 {
+	unsigned int num;
+	int len;
 
-		unsigned int num;
+	int rem_num;
 
-			int len;
+	char *hex_rep;
 
-				int rem_num;
+	char *rev_hex;
 
-					char *hex_rep;
+	num = va_arg(list, unsigned int);
+	
+	if (num == 0)
+		return (_write_char('0'));
+	if (num < 1)
+		return (-1);
 
-						char *rev_hex;
+	len = base_len(num, 16);
 
+	hex_rep = malloc(sizeof(char) * len + 1);
 
+	if (hex_rep == NULL)
+		return (-1);
 
-							num = va_arg(list, unsigned int);
+	for (len = 0; num > 0; len++)
+	{
+		rem_num = num % 16;
 
+		if (rem_num > 9)
+		{
+			rem_num = hex_check(rem_num, 'x');
+			hex_rep[len] = rem_num;
+		}
+		else
+		{
+			hex_rep[len] = rem_num + 48;
+			num = num / 16;
+		}
+										}
 
+										hex_rep[len] = '\0';
+										rev_hex = rev_string(hex_rep);
 
-								if (num == 0)
-
-											return (_write_char('0'));
-
-									if (num < 1)
-
-												return (-1);
-
-										len = base_len(num, 16);
-
-											hex_rep = malloc(sizeof(char) * len + 1);
-
-												if (hex_rep == NULL)
-
-															return (-1);
-
-													for (len = 0; num > 0; len++)
-
-															{
-
-																		rem_num = num % 16;
-
-																				if (rem_num > 9)
-
-																							{
-
-																											rem_num = hex_check(rem_num, 'x');
-
-																														hex_rep[len] = rem_num;
-
-																																}
-
-																						else
-
-																										hex_rep[len] = rem_num + 48;
-
-																								num = num / 16;
-
-																									}
-
-														hex_rep[len] = '\0';
-
-															rev_hex = rev_string(hex_rep);
-
-																if (rev_hex == NULL)
+										if (rev_hex == NULL)
 
 																			return (-1);
 

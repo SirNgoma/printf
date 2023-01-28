@@ -33,11 +33,10 @@ int print_reversed(va_list arg)
 	for (len = 0; ptr[len] != '\0'; len++)
 	{
 		_write_char(ptr[len]);
-		free(ptr);
-
-		return (len);
 	}
+	free(ptr);
 
+	return (len);
 }
 
 

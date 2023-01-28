@@ -3,7 +3,6 @@
 
 
 /**
- *
  * print_number - prints a number send to this function
  *
  * @args: List of arguments

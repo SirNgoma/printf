@@ -87,6 +87,7 @@ int print_integer(va_list list)
 int unsigned_integer(va_list list)
 {
 	unsigned int num;
+
 	num = va_arg(list, unsigned int);
 
 	if (num == 0)

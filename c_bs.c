@@ -144,15 +144,11 @@ int print_hex(va_list list)
 {
 	unsigned int num;
 	int len;
-
 	int rem_num;
-
 	char *hex_rep;
-
 	char *rev_hex;
 
 	num = va_arg(list, unsigned int);
-	
 	if (num == 0)
 		return (_write_char('0'));
 	if (num < 1)
@@ -214,10 +210,10 @@ int print_heX(va_list list)
 	unsigned int num;
 
 	int len;
-
 	int rem_num;
 	char *hex_rep;
 	char *rev_hex;
+
 	num = va_arg(list, unsigned int);
 
 	if (num == 0)
